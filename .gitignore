@@ -1,0 +1,5 @@
+# ignore compiled class files
+*.class
+# ignore macros
+compile
+run
