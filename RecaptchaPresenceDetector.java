@@ -1,3 +1,4 @@
+import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
 
 public class RecaptchaPresenceDetector {
@@ -17,11 +18,19 @@ public class RecaptchaPresenceDetector {
 	}
 
 	private Runnable awaitRecaptcha = () -> {
-		System.out.println(RecaptchaPresenceDetector.this.screen);	
+		while(isRunning) {
+			try {
+				screen.wait("sample-recaptcha.png", 1);
+				System.out.println("sample recaptcha detected!");
+			} catch(FindFailed findFailed) {
+			}
+			if(!isRunning) {
+				break;
+			}
+		}
 	};
 
 	public void stop() {
 		this.isRunning = false;
-		this.thread.interrupt();
 	}
 }
